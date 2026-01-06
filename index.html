@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>二胎全攻略 - 家庭指南</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4A90A4;
+            --primary-dark: #357A8C;
+            --secondary: #E8B4BC;
+            --accent: #F5A623;
+            --danger: #E53935;
+            --success: #43A047;
+            --warning: #FB8C00;
+            --bg: #FDF8F5;
+            --card-bg: #FFFFFF;
+            --text: #2D3748;
+            --text-light: #718096;
+            --border: #E2E8F0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* ========== 密碼保護畫面 ========== */
+        #login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #FDF8F5 0%, #E8F4F8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #login-screen.hidden { display: none; }
+
+        .login-box {
+            background: white;
+            padding: 40px 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+        }
+
+        .login-box .logo { font-size: 3em; margin-bottom: 10px; }
+        .login-box h2 { color: var(--primary); margin-bottom: 8px; font-size: 1.4em; }
+        .login-box .subtitle { color: var(--text-light); font-size: 0.9em; margin-bottom: 25px; }
+
+        .login-box input[type="password"] {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 16px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        .login-box input[type="password"]:focus { border-color: var(--primary); }
+
+        .login-box button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .login-box button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74,144,164,0.4);
+        }
+
+        .login-box .error {
+            background: #FEE2E2;
+            color: #DC2626;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            display: none;
+        }
+
+        .login-box .error.show { display: block; }
+
+        .login-box .hint { margin-top: 20px; font-size: 0.8em; color: #A0AEC0; }
+
+        /* ========== 主內容區 ========== */
+        #main-content { display: none; }
+        #main-content.show { display: block; }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 12px; }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 20px 15px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .header h1 { font-size: 1.4em; margin-bottom: 5px; }
+        .header .subtitle { font-size: 0.85em; opacity: 0.9; }
+
+        .logout-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover { background: rgba(255,255,255,0.3); }
+
+        /* Tabs */
+        .category-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .category-tab {
+            padding: 10px 8px;
+            border: none;
+            background: var(--bg);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .category-tab:hover { background: var(--secondary); }
+        .category-tab.active { background: var(--primary); color: white; }
+
+        .sub-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            margin-bottom: 15px;
+            padding: 8px;
+            background: #f0f4f8;
+            border-radius: 10px;
+        }
+
+        .sub-tab {
+            padding: 8px 6px;
+            border: none;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .sub-tab:hover { background: var(--secondary); }
+        .sub-tab.active { background: var(--primary); color: white; }
+
+        @media (min-width: 768px) {
+            .category-tabs { grid-template-columns: repeat(4, 1fr); }
+            .sub-tabs { grid-template-columns: repeat(5, 1fr); }
+        }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ========== 簡潔表格 ========== */
+        .clean-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        .clean-table th {
+            background: var(--primary);
+            color: white;
+            padding: 10px 8px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.85em;
+        }
+
+        .clean-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .clean-table tr:last-child td { border-bottom: none; }
+        .clean-table tr:hover { background: #fafafa; }
+        .clean-table .food-name { font-weight: 600; white-space: nowrap; }
+        .clean-table .risk { color: var(--danger); font-size: 0.8em; }
+        .clean-table .alt { color: var(--success); font-size: 0.85em; }
+        .clean-table .warning-risk { color: var(--warning); font-size: 0.8em; }
+
+        .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 10px 0; }
+        .table-wrap table { min-width: 400px; }
+
+        /* ========== 用藥表格 ========== */
+        .med-table { width: 100%; border-collapse: collapse; font-size: 0.85em; }
+        .med-table th { background: var(--primary); color: white; padding: 10px 8px; text-align: left; font-weight: 600; }
+        .med-table td { padding: 10px 8px; border-bottom: 1px solid var(--border); vertical-align: top; }
+        .med-table .symptom { font-weight: 600; color: var(--primary-dark); }
+        .med-table .safe { color: var(--success); }
+        .med-table .avoid { color: var(--danger); }
+        .med-table .note { font-size: 0.85em; color: var(--text-light); }
+
+        /* ========== 時間線卡片 ========== */
+        .timeline-card { background: white; border-radius: 12px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .timeline-card-header { background: var(--primary); color: white; padding: 12px; }
+        .timeline-card-header.current { background: var(--accent); }
+        .timeline-card-header.postpartum { background: var(--secondary); }
+        .timeline-card-header.future { background: var(--success); }
+        .timeline-card-title { font-weight: 600; font-size: 1em; }
+        .timeline-card-subtitle { font-size: 0.8em; opacity: 0.9; margin-top: 3px; }
+        .timeline-card-body { padding: 12px; display: grid; grid-template-columns: 1fr; gap: 12px; }
+        @media (min-width: 600px) { .timeline-card-body { grid-template-columns: 1fr 1fr; } }
+        .timeline-section { padding: 10px; border-radius: 8px; }
+        .timeline-section.mom { background: linear-gradient(135deg, #FCE4EC, #F8BBD9); }
+        .timeline-section.todo { background: linear-gradient(135deg, #E3F2FD, #BBDEFB); }
+        .timeline-section h5 { font-size: 0.85em; margin-bottom: 8px; color: var(--primary-dark); }
+        .timeline-section ul { list-style: none; padding: 0; margin: 0; }
+        .timeline-section li { padding: 3px 0; font-size: 0.85em; padding-left: 12px; position: relative; }
+        .timeline-section li::before { content: "•"; position: absolute; left: 0; color: var(--primary); }
+
+        /* ========== 營養時間軸 ========== */
+        .nutrition-row { display: flex; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 8px; }
+        .nutrition-row:last-child { border-bottom: none; }
+        .nutrition-name { font-weight: 600; width: 60px; flex-shrink: 0; }
+        .nutrition-bar-wrap { flex: 1; min-width: 150px; background: #f0f0f0; border-radius: 8px; height: 24px; position: relative; }
+        .nutrition-bar { height: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.7em; color: white; font-weight: 500; }
+        .nutrition-bar.folate { background: #E53935; width: 30%; }
+        .nutrition-bar.calcium { background: #1976D2; width: 70%; margin-left: 30%; }
+        .nutrition-bar.iron { background: #388E3C; width: 70%; margin-left: 30%; }
+        .nutrition-bar.dha { background: #F57C00; width: 70%; margin-left: 30%; }
+        .nutrition-details { width: 100%; font-size: 0.8em; color: var(--text-light); padding-left: 68px; margin-top: 4px; }
+        @media (max-width: 500px) { .nutrition-details { padding-left: 0; } }
+
+        /* ========== Info Boxes ========== */
+        .info-box { background: #E3F2FD; border-left: 4px solid #2196F3; padding: 12px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 0.85em; }
+        .warning-box { background: #FFF3E0; border-left: 4px solid var(--warning); padding: 12px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 0.85em; }
+        .danger-box { background: #FFEBEE; border-left: 4px solid var(--danger); padding: 12px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 0.85em; }
+        .success-box { background: #E8F5E9; border-left: 4px solid var(--success); padding: 12px; border-radius: 0 8px 8px 0; margin: 12px 0; font-size: 0.85em; }
+
+        /* ========== Checklist ========== */
+        .checklist { list-style: none; padding: 0; }
+        .checklist li { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+        .checklist li:last-child { border-bottom: none; }
+        .checklist input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; cursor: pointer; accent-color: var(--primary); flex-shrink: 0; }
+        .checklist .item-content { flex: 1; }
+        .checklist .item-title { font-weight: 500; font-size: 0.9em; }
+        .checklist .item-desc { font-size: 0.8em; color: var(--text-light); margin-top: 2px; }
+        .checklist input:checked + .item-content .item-title { text-decoration: line-through; color: var(--text-light); }
+
+        /* ========== Progress ========== */
+        .overall-progress { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
+        .overall-progress h3 { color: white; margin-bottom: 10px; font-size: 1em; }
+        .overall-progress-bar { background: rgba(255,255,255,0.3); border-radius: 12px; height: 20px; overflow: hidden; margin-bottom: 8px; }
+        .overall-progress-fill { height: 100%; background: white; border-radius: 12px; transition: width 0.5s; display: flex; align-items: center; justify-content: center; color: var(--primary); font-weight: 600; font-size: 0.8em; }
+        .progress-container { background: var(--border); border-radius: 8px; height: 6px; margin: 8px 0; overflow: hidden; }
+        .progress-bar { background: linear-gradient(90deg, var(--primary), var(--accent)); height: 100%; border-radius: 8px; transition: width 0.5s; }
+        .progress-text { font-size: 0.8em; color: var(--text-light); text-align: right; }
+
+        /* ========== Simple List ========== */
+        .simple-list { list-style: none; padding: 0; }
+        .simple-list li { padding: 6px 0; padding-left: 15px; position: relative; font-size: 0.9em; }
+        .simple-list li::before { content: "•"; position: absolute; left: 0; color: var(--primary); }
+        .simple-list.danger li::before { color: var(--danger); }
+        .simple-list.success li::before { color: var(--success); }
+
+        /* ========== Schedule ========== */
+        .schedule-timeline { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+        .schedule-grid { display: grid; grid-template-columns: 60px repeat(5, minmax(80px, 1fr)); gap: 2px; min-width: 500px; font-size: 0.75em; }
+        .schedule-header { background: var(--primary); color: white; padding: 8px 4px; text-align: center; font-weight: 600; }
+        .schedule-role-header { background: var(--bg); padding: 8px 4px; font-weight: 600; text-align: center; }
+        .schedule-cell { background: white; padding: 6px 4px; text-align: center; min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .schedule-cell.highlight { background: #FFF3E0; font-weight: 600; color: var(--warning); }
+        .schedule-cell.work { background: #E3F2FD; }
+
+        /* ========== Cost Table ========== */
+        .cost-compare { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .cost-table { width: 100%; min-width: 450px; border-collapse: collapse; font-size: 0.85em; }
+        .cost-table th { background: var(--primary); color: white; padding: 10px 8px; text-align: center; font-weight: 600; }
+        .cost-table td { padding: 10px 8px; text-align: center; border-bottom: 1px solid var(--border); vertical-align: top; }
+        .cost-table .price { font-weight: 600; color: var(--primary-dark); }
+        .cost-table .pros { color: var(--success); text-align: left; font-size: 0.85em; }
+        .cost-table .cons { color: var(--danger); text-align: left; font-size: 0.85em; }
+
+        /* ========== Budget ========== */
+        .budget-section { background: var(--bg); padding: 12px; border-radius: 10px; margin: 12px 0; }
+        .budget-total { background: var(--primary); color: white; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; font-size: 0.95em; font-weight: 600; margin-top: 12px; }
+        .cost-option { display: flex; align-items: center; gap: 8px; padding: 10px; background: var(--card-bg); border-radius: 8px; margin: 6px 0; cursor: pointer; border: 2px solid transparent; transition: all 0.3s; flex-wrap: wrap; }
+        .cost-option:hover { border-color: var(--primary); }
+        .cost-option input { width: 18px; height: 18px; flex-shrink: 0; }
+        .cost-option .cost-label { flex: 1; min-width: 120px; font-size: 0.9em; }
+        .cost-option .cost-value { font-weight: 600; font-size: 0.85em; }
+
+        /* ========== Toast ========== */
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--success); color: white; padding: 12px 20px; border-radius: 8px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 1000; opacity: 0; transition: all 0.3s ease; font-size: 0.9em; }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* ========== Carol Header ========== */
+        .carol-header { background: linear-gradient(135deg, #E8B4BC, #D4919A); color: white; padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
+        .carol-header h2 { font-size: 1.1em; margin-bottom: 3px; }
+        .carol-header p { font-size: 0.85em; opacity: 0.9; }
+
+        /* ========== Footer ========== */
+        .footer { text-align: center; padding: 15px; color: var(--text-light); font-size: 0.85em; }
+        .source-ref { font-size: 0.7em; color: var(--text-light); margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+    <!-- ========== 密碼保護畫面 ========== -->
+    <div id="login-screen">
+        <div class="login-box">
+            <div class="logo">👶</div>
+            <h2>二胎全攻略</h2>
+            <p class="subtitle">家庭專屬指南</p>
+            <div class="error" id="login-error">❌ 密碼錯誤，請重試</div>
+            <form onsubmit="return checkPassword()">
+                <input type="password" id="password-input" placeholder="請輸入密碼" required autofocus>
+                <button type="submit">進入</button>
+            </form>
+            <p class="hint">🔒 此頁面需要密碼才能訪問</p>
+        </div>
+    </div>
+
+    <!-- ========== 主內容區 ========== -->
+    <div id="main-content">
+        <div class="header">
+            <button class="logout-btn" onclick="logout()">🔓 登出</button>
+            <h1>二胎全攻略</h1>
+            <div class="subtitle">家庭指南 | 仁仁將成為哥哥 | 預產期 2026年9月初</div>
+        </div>
+
+        <div class="container">
+            <!-- Category Tabs -->
+            <div class="category-tabs">
+                <button class="category-tab active" onclick="showCategory('pregnancy')">📋 孕期資訊</button>
+                <button class="category-tab" onclick="showCategory('prepare')">✅ 待辦準備</button>
+                <button class="category-tab" onclick="showCategory('family')">👨‍👩‍👧‍👦 家庭安排</button>
+                <button class="category-tab" onclick="showCategory('finance')">💰 費用規劃</button>
+            </div>
+
+            <!-- Sub Tabs -->
+            <div id="sub-tabs-pregnancy" class="sub-tabs">
+                <button class="sub-tab active" onclick="showSection('timeline')">🧬 時間線</button>
+                <button class="sub-tab" onclick="showSection('enci')">👩 恩慈專區</button>
+                <button class="sub-tab" onclick="showSection('medicine')">💊 用藥指南</button>
+                <button class="sub-tab" onclick="showSection('travel')">✈️ 旅行</button>
+                <button class="sub-tab" onclick="showSection('emergency')">⚠️ 緊急</button>
+            </div>
+
+            <div id="sub-tabs-prepare" class="sub-tabs" style="display: none;">
+                <button class="sub-tab" onclick="showSection('todo')">✅ 待辦事項</button>
+                <button class="sub-tab" onclick="showSection('supplies')">🛒 嬰兒用品</button>
+                <button class="sub-tab" onclick="showSection('hospital')">🏥 待產包</button>
+            </div>
+
+            <div id="sub-tabs-family" class="sub-tabs" style="display: none;">
+                <button class="sub-tab" onclick="showSection('helper')">👩‍🍼 菲傭安排</button>
+                <button class="sub-tab" onclick="showSection('brother')">👦 仁仁準備</button>
+            </div>
+
+            <div id="sub-tabs-finance" class="sub-tabs" style="display: none;">
+                <button class="sub-tab" onclick="showSection('cost')">💰 費用比較</button>
+                <button class="sub-tab" onclick="showSection('budget')">🧮 預算計算</button>
+            </div>
+
+            <!-- ==================== TIMELINE ==================== -->
+            <div id="timeline" class="section active">
+                <div class="card">
+                    <h3><i class="fas fa-dna"></i> 完整孕期時間線</h3>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header current">
+                            <div class="timeline-card-title">第 1-4 週 · 第 1 個月</div>
+                            <div class="timeline-card-subtitle">2025年11-12月（目前）</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>確認懷孕</li><li>可能開始孕吐</li><li>容易疲倦、嗜睡</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>購買葉酸（每日600微克）</li><li>聯繫菲傭中介</li><li>購買孕婦繪本給仁仁</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <div class="timeline-card-title">第 5-8 週 · 第 2 個月</div>
+                            <div class="timeline-card-subtitle">2025年12月 - 2026年1月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>第一次產檢（6-8週）</li><li>可見心跳</li><li>孕吐可能加重</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>陪恩慈去鏡湖產檢</li><li>準備蘇打餅、薑糖</li><li>開始用繪本跟仁仁說</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <div class="timeline-card-title">第 9-12 週 · 第 3 個月</div>
+                            <div class="timeline-card-subtitle">2026年1-2月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>NT頸皮厚度檢查（11-14週）</li><li>孕吐開始減緩</li><li>肚子微微隆起</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>提交菲傭申請文件</li><li>陪恩慈做 NT頸皮厚度檢查</li><li>告訴親友喜訊</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <div class="timeline-card-title">第 13-16 週 · 第 4 個月</div>
+                            <div class="timeline-card-subtitle">2026年2-3月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>進入穩定期</li><li>精神恢復</li><li>開始感受胎動</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>唐氏症篩檢（16-20週）</li><li>開始物色月子餐</li><li>讓仁仁摸媽媽肚子</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <div class="timeline-card-title">第 17-24 週 · 第 5-6 個月</div>
+                            <div class="timeline-card-subtitle">2026年3-5月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>結構超聲波（20-24週）</li><li>可知道性別</li><li>胎動明顯</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>陪恩慈做結構超聲波</li><li>預訂坐月子營養餐</li><li>開始物色嬰兒用品</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <div class="timeline-card-title">第 25-28 週 · 第 7 個月</div>
+                            <div class="timeline-card-subtitle">2026年5-6月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>妊娠糖尿病篩檢</li><li>肚子明顯變大</li><li>可能腰痠背痛</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>菲傭到位、開始培訓</li><li>規劃家居空間</li><li>開始採購嬰兒用品</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <div class="timeline-card-title">第 29-32 週 · 第 8 個月</div>
+                            <div class="timeline-card-subtitle">2026年6-7月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>產檢變頻密（每2週）</li><li>可能水腫、失眠</li><li>假性宮縮開始</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>完成嬰兒用品採購</li><li>準備待產包</li><li>確認營養餐開始日期</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header">
+                            <div class="timeline-card-title">第 33-40 週 · 第 9-10 個月</div>
+                            <div class="timeline-card-subtitle">2026年8-9月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>產檢每週一次</li><li>胎位固定</li><li>隨時可能生產</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>確認鏡湖生產流程</li><li>安排生產時仁仁照顧事項</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header postpartum">
+                            <div class="timeline-card-title">產後 0-6 週 · 坐月子期</div>
+                            <div class="timeline-card-subtitle">2026年9-10月</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>坐月子休養</li><li>身體恢復中</li><li>適應新生兒作息</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>照顧恩慈休息</li><li>爸爸負責夜間餵奶</li><li>關注仁仁情緒</li></ul></div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-card">
+                        <div class="timeline-card-header future">
+                            <div class="timeline-card-title">產後 3-12 個月</div>
+                            <div class="timeline-card-subtitle">2026年底 - 2027年</div>
+                        </div>
+                        <div class="timeline-card-body">
+                            <div class="timeline-section mom"><h5>👩 恩慈的變化</h5><ul><li>產假結束（70天後）</li><li>身體基本恢復</li><li>建立穩定作息</li></ul></div>
+                            <div class="timeline-section todo"><h5>✅ 待辦事項</h5><ul><li>安排復工後照顧分工</li><li>寶寶疫苗接種</li><li>仁仁適應新角色</li></ul></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 恩慈專區 ==================== -->
+            <div id="enci" class="section">
+                <div class="carol-header">
+                    <h2>👩 恩慈的孕期生活指南</h2>
+                    <p>營養補充 | 飲食禁忌 | 日常護理</p>
+                </div>
+
+                <div class="card">
+                    <h3>💊 營養補充時間軸</h3>
+                    <p style="color: var(--text-light); font-size: 0.85em; margin-bottom: 10px;">第1-12週 = 2025年11月-2026年2月 | 第12週起 = 2026年2月-產後</p>
+
+                    <div class="nutrition-row">
+                        <div class="nutrition-name">葉酸</div>
+                        <div class="nutrition-bar-wrap"><div class="nutrition-bar folate">孕前→12週</div></div>
+                    </div>
+                    <div class="nutrition-details">📌 <strong>800微克/日</strong> · ⏰ 早餐後 · 💡 預防神經管缺陷 · 🛑 12週後可停</div>
+
+                    <div class="nutrition-row">
+                        <div class="nutrition-name">鈣</div>
+                        <div class="nutrition-bar-wrap"><div class="nutrition-bar calcium">12週→產後</div></div>
+                    </div>
+                    <div class="nutrition-details">📌 1000毫克/日 · ⏰ 睡前（與鐵分開1小時） · 💡 胎兒骨骼發育</div>
+
+                    <div class="nutrition-row">
+                        <div class="nutrition-name">鐵</div>
+                        <div class="nutrition-bar-wrap"><div class="nutrition-bar iron">12週→產後</div></div>
+                    </div>
+                    <div class="nutrition-details">📌 15→45毫克/日 · ⏰ 餐後（避開茶！） · 💡 造血、預防貧血</div>
+
+                    <div class="nutrition-row">
+                        <div class="nutrition-name">DHA</div>
+                        <div class="nutrition-bar-wrap"><div class="nutrition-bar dha">12週→產後</div></div>
+                    </div>
+                    <div class="nutrition-details">📌 200-300毫克/日 · ⏰ 隨餐 · 💡 胎兒腦部和視力發育</div>
+
+                    <div class="success-box" style="margin-top: 15px;">
+                        <strong>✅ 目前補充品（Elevit 愛樂維）：</strong>
+                        <ul class="simple-list success" style="margin-top: 8px;">
+                            <li><strong>葉酸片</strong>：800μg 葉酸 + 綜合維他命礦物質 → 每日1粒</li>
+                            <li><strong>DHA 膠囊</strong>：200mg DHA → 每日1粒</li>
+                        </ul>
+                        <p style="font-size: 0.85em; margin-top: 8px; color: var(--text-light);">💡 可能額外考慮：產檢驗血後如有需要，再補充鈣片</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🍽️ 每日飲食指南</h3>
+                    <p style="color: var(--text-light); font-size: 0.85em; margin-bottom: 12px;">第5週起適用 · 按三餐分類 · 方便每日跟著吃</p>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.95em; color: var(--primary);">☀️ 早餐</h4>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>項目</th><th>建議份量</th><th>食物選擇</th><th>推薦菜式</th></tr>
+                            <tr>
+                                <td class="food-name">主食</td>
+                                <td>1份</td>
+                                <td>玉米、肉包、菜肉包、叉燒包、饅頭夾蛋、全麥麵包、蔥油餅加蛋、燕麥</td>
+                                <td class="alt">玉米+肉包、饅頭夾蛋、燕麥配鮮奶</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">蛋白質</td>
+                                <td>1份</td>
+                                <td>烚蛋、煎蛋、蒸水蛋、荷包蛋</td>
+                                <td class="alt">烚蛋、蒸水蛋</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">奶類</td>
+                                <td>1杯</td>
+                                <td>鮮奶、無糖優酪乳、高鈣豆漿、鮮奶燕麥</td>
+                                <td class="alt">鮮奶、無糖優酪乳</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💊 補充劑</td>
+                                <td>—</td>
+                                <td>葉酸+DHA（Elevit）</td>
+                                <td class="alt">飯後服用</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <h4 style="margin: 18px 0 8px; font-size: 0.95em; color: var(--primary);">🌞 午餐</h4>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>項目</th><th>建議份量</th><th>食物選擇</th><th>推薦菜式</th></tr>
+                            <tr>
+                                <td class="food-name">主食</td>
+                                <td>1-1.5碗</td>
+                                <td>白飯、糙米、麵條、河粉、米粉、意粉</td>
+                                <td class="alt">白飯、番茄蛋麵、意粉</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">肉類/魚</td>
+                                <td>1份</td>
+                                <td>雞肉、豬肉、牛肉、魚、蝦</td>
+                                <td class="alt">蒸魚、番茄牛腩、清炒蝦仁、蒜香雞扒</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">蔬菜</td>
+                                <td>1-2份</td>
+                                <td>深綠葉菜、瓜類、菇類</td>
+                                <td class="alt">蒜蓉菜心、白灼芥蘭、番茄炒蛋</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">湯（可選）</td>
+                                <td>1碗</td>
+                                <td>番茄蛋湯、冬瓜排骨湯、青紅蘿蔔湯</td>
+                                <td class="alt">番茄蛋湯、冬瓜湯</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="info-box" style="margin-top: 10px;">
+                        <strong>午餐組合範例：</strong>蒸鱸魚+白飯+蒜蓉西蘭花 ｜ 番茄牛腩飯+燙菜心 ｜ 雞肉意粉+沙律菜（熟食）
+                    </div>
+
+                    <h4 style="margin: 18px 0 8px; font-size: 0.95em; color: var(--primary);">🍵 下午茶（15:00-16:00）</h4>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>項目</th><th>建議份量</th><th>食物選擇</th><th>推薦菜式</th></tr>
+                            <tr>
+                                <td class="food-name">水果</td>
+                                <td>1份</td>
+                                <td>奇異果、蘋果、橙、士多啤梨、香蕉、提子、藍莓</td>
+                                <td class="alt">奇異果、蘋果、橙</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">堅果</td>
+                                <td>1小把</td>
+                                <td>核桃、杏仁、腰果、開心果（原味）</td>
+                                <td class="alt">混合堅果</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">飲品（可選）</td>
+                                <td>1杯</td>
+                                <td>檸檬水、溫水、鮮奶</td>
+                                <td class="alt">溫檸檬水</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <h4 style="margin: 18px 0 8px; font-size: 0.95em; color: var(--primary);">🌙 晚餐</h4>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>項目</th><th>建議份量</th><th>食物選擇</th><th>推薦菜式</th></tr>
+                            <tr>
+                                <td class="food-name">主食</td>
+                                <td>1碗</td>
+                                <td>白飯、糙米、麵條、玉米</td>
+                                <td class="alt">白飯、糙米飯</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">肉類/魚/豆</td>
+                                <td>1份</td>
+                                <td>雞、豬、牛、魚、蝦、豆腐</td>
+                                <td class="alt">檸檬蒸魚、蒜香排骨、豆腐蒸肉餅、薑蔥雞</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">蔬菜</td>
+                                <td>2份</td>
+                                <td>深綠葉菜 + 其他蔬菜</td>
+                                <td class="alt">蒜蓉菠菜、清炒西蘭花、節瓜炒蛋</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">湯（可選）</td>
+                                <td>1碗</td>
+                                <td>清湯、滾湯</td>
+                                <td class="alt">番茄薯仔排骨湯、魚湯</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="info-box" style="margin-top: 10px;">
+                        <strong>晚餐組合範例：</strong>檸檬蒸魚+飯+蒜蓉西蘭花 ｜ 薑蔥雞+飯+燙菜心+番茄蛋湯 ｜ 蒜香排骨+糙米飯+菠菜
+                    </div>
+
+                    <h4 style="margin: 18px 0 8px; font-size: 0.95em; color: var(--primary);">🌜 睡前（可選）+ 💧 全日飲水</h4>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>項目</th><th>建議</th><th>備註</th></tr>
+                            <tr>
+                                <td class="food-name">🌜 睡前奶類</td>
+                                <td>1杯（溫鮮奶、原味乳酪）</td>
+                                <td class="alt">幫助睡眠、補鈣</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💧 起床後</td>
+                                <td>1杯溫水</td>
+                                <td>喚醒身體</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💧 上午</td>
+                                <td>2杯</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💧 下午</td>
+                                <td>2-3杯</td>
+                                <td>可加檸檬片</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💧 晚上</td>
+                                <td>2杯</td>
+                                <td>睡前2小時減少</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name"><strong>💧 全日總計</strong></td>
+                                <td><strong>8杯（約2000ml）</strong></td>
+                                <td>—</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🍖 食物處理原則</h3>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>類別</th><th>原則</th><th>說明</th></tr>
+                            <tr>
+                                <td class="food-name">🥩 動物性食物<br><span style="font-size:0.8em;color:var(--text-light);">肉、蛋、魚</span></td>
+                                <td><strong style="color:var(--danger)">一定要全熟</strong></td>
+                                <td>食物中心溫度達 70°C 以上<br>（至少 3 分鐘）</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🥗 植物性食物<br><span style="font-size:0.8em;color:var(--text-light);">果、菜</span></td>
+                                <td><strong>洗淨或煮熟</strong></td>
+                                <td>水果一定要洗淨或削皮<br>蔬菜要煮熟</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🧊 外出用餐</td>
+                                <td class="warning-risk">不喝冰飲</td>
+                                <td>各店家冰處理不同，有風險</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🥬 沙拉</td>
+                                <td class="warning-risk">盡量避免</td>
+                                <td>生菜清洗處理難保證乾淨</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🥛 超市牛奶</td>
+                                <td class="alt">加熱後飲用</td>
+                                <td>已巴氏滅菌，但從冷藏室拿出<br>最好加熱後再喝</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="warning-box" style="margin-top: 12px;">
+                        <strong>⚠️ 重要提醒：</strong>必須確保食物中心溫度達到 <strong>70°C 或以上</strong>（至少 3 分鐘），才能消滅<strong>李斯特菌、沙門氏菌和弓漿蟲</strong>。
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🏠 日常生活護理</h3>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>類別</th><th>建議</th><th>說明</th></tr>
+                            <tr>
+                                <td class="food-name">😴 睡眠</td>
+                                <td><strong style="color:var(--success)">早睡早起</strong></td>
+                                <td>建議晚上 10-11 點前入睡<br>每日睡 7-9 小時</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🏋️ 提重物</td>
+                                <td class="risk"><strong>避免</strong></td>
+                                <td>不提超過 5 公斤的重物<br>避免搬重、抱仁仁太久</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🧊 冷藏食物</td>
+                                <td class="warning-risk">加熱後再吃</td>
+                                <td>從冰箱拿出的食物最好加熱<br>避免冷食傷腸胃</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💧 漱口</td>
+                                <td class="alt">用生理鹽水</td>
+                                <td>代替市面上含酒精的漱口水<br>更安全溫和</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🛁 洗澡</td>
+                                <td class="alt">溫水淋浴</td>
+                                <td>水溫不超過 38°C<br>避免泡澡、桑拿、溫泉</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">👠 穿著</td>
+                                <td class="alt">平底鞋為主</td>
+                                <td>避免高跟鞋，防止跌倒<br>穿寬鬆透氣衣服</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💺 久坐久站</td>
+                                <td class="warning-risk">避免</td>
+                                <td>每 1-2 小時起來走動<br>預防水腫和血栓</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🚗 開車/乘車</td>
+                                <td class="alt">繫好安全帶</td>
+                                <td>安全帶放在腹部下方<br>長途每 2 小時休息</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">💄 化妝護膚</td>
+                                <td class="warning-risk">選擇天然產品</td>
+                                <td>避免含 A 酸、水楊酸產品<br>減少染髮燙髮</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">📱 情緒</td>
+                                <td class="alt">保持放鬆</td>
+                                <td>避免過度勞累和壓力<br>有不適及時告訴家人</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🚫 完全禁止的食物</h3>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>食物</th><th>風險</th><th>替代方案</th></tr>
+                            <tr>
+                                <td class="food-name">🍣 刺身/生魚片</td>
+                                <td class="risk">李斯特菌<br>感染風險高20倍</td>
+                                <td class="alt">✅ 煮熟鮭魚、熟蝦壽司</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🦪 生蠔、生貝類</td>
+                                <td class="risk">諾如病毒<br>可致腹瀉脫水</td>
+                                <td class="alt">✅ 蒸熟的蠔、烤蛤蜊</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🥚 生蛋、半熟蛋</td>
+                                <td class="risk">沙門氏菌<br>可致發燒、子宮痙攣</td>
+                                <td class="alt">❌ 避免溫泉蛋、太陽蛋</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🥩 未煮熟的肉</td>
+                                <td class="risk">弓形蟲<br>可致胎兒畸形</td>
+                                <td class="alt">火鍋肉煮沸2-3分鐘</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🍷 酒精（含米酒）</td>
+                                <td class="risk">酒精<br>沒有安全劑量</td>
+                                <td class="alt">❌ 避免薑母鴨、羊肉爐</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🐟 大型深海魚</td>
+                                <td class="risk">汞（水銀）<br>損害神經發育</td>
+                                <td class="alt">❌ 避免鯊魚、劍魚、大鮪魚</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>⚠️ 需要注意的食物</h3>
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>食物</th><th>限制</th><th>說明</th></tr>
+                            <tr>
+                                <td class="food-name">🍵 茶</td>
+                                <td class="warning-risk">每日1-2杯</td>
+                                <td>第一杯含70-80%咖啡因<br>⏰ 16:00後不喝 → 改水果茶</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">☕ 咖啡因總量</td>
+                                <td class="warning-risk">≤200mg/日</td>
+                                <td>= 1杯中杯咖啡 = 2-3杯淡茶</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🌶️ 辛辣食物</td>
+                                <td class="warning-risk">適量</td>
+                                <td>恩慈腸胃較弱，建議少吃</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🧊 冰冷食物</td>
+                                <td class="warning-risk">要適量</td>
+                                <td>偶爾1支冰淇淋可以，避免大量冰飲</td>
+                            </tr>
+                            <tr>
+                                <td class="food-name">🍲 火鍋</td>
+                                <td class="alt">可以吃</td>
+                                <td>肉類煮沸2-3分鐘<br>❌ 避免生雞蛋沾料</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>💡 恩慈特別提醒</h3>
+                    <div class="success-box">
+                        <strong>喜歡的食物調整：</strong>
+                        <ul class="simple-list success" style="margin-top: 8px;">
+                            <li><strong>刺身/生魚片</strong> → 改吃煮熟的鮭魚、熟蝦壽司</li>
+                            <li><strong>火鍋</strong> → 可以吃，肉要煮熟 2-3 分鐘</li>
+                            <li><strong>辛辣食物</strong> → 少辣，吃完觀察身體反應</li>
+                            <li><strong>茶</strong> → 淡茶每日 1-2 杯，16:00 後改喝水果茶</li>
+                            <li><strong>冰冷食物</strong> → 要適量，避免大量冰飲</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== 用藥指南 ==================== -->
+            <div id="medicine" class="section">
+                <div class="card">
+                    <h3>💊 孕期常見不適與用藥指南</h3>
+                    <div class="danger-box">
+                        <strong>⚠️ 重要原則：</strong>任何用藥前請先諮詢醫生！以下僅供參考。
+                    </div>
+
+                    <div class="table-wrap">
+                        <table class="med-table">
+                            <tr><th>症狀</th><th>相對安全的藥物</th><th>應避免的藥物</th></tr>
+                            <tr>
+                                <td class="symptom">🤧 感冒<br><span class="note">流鼻水、鼻塞</span></td>
+                                <td class="safe">✅ 生理鹽水洗鼻<br>✅ 蒸氣吸入<br>✅ Paracetamol（撲熱息痛）</td>
+                                <td class="avoid">❌ 含偽麻黃鹼的藥物<br>❌ 複方感冒藥（成分複雜）</td>
+                            </tr>
+                            <tr>
+                                <td class="symptom">🌡️ 發燒</td>
+                                <td class="safe">✅ Paracetamol（撲熱息痛）<br><span class="note">每次500-1000mg，每日≤4g</span></td>
+                                <td class="avoid">❌ Aspirin（阿斯匹靈）<br>❌ Ibuprofen（布洛芬）</td>
+                            </tr>
+                            <tr>
+                                <td class="symptom">😷 咳嗽</td>
+                                <td class="safe">✅ 蜂蜜檸檬水<br>✅ 蒸氣吸入</td>
+                                <td class="avoid">❌ 含可待因的藥物<br>❌ 複方止咳水</td>
+                            </tr>
+                            <tr>
+                                <td class="symptom">🔥 喉嚨痛</td>
+                                <td class="safe">✅ 溫鹽水漱口<br>✅ 蜂蜜水</td>
+                                <td class="avoid">❌ 含碘的喉片<br>❌ 含酒精的漱口水</td>
+                            </tr>
+                            <tr>
+                                <td class="symptom">🤢 肚痛/腹瀉</td>
+                                <td class="safe">✅ 多喝水、補充電解質<br>✅ 益生菌</td>
+                                <td class="avoid">❌ 止瀉藥（除非醫生處方）</td>
+                            </tr>
+                            <tr>
+                                <td class="symptom">🤕 頭痛</td>
+                                <td class="safe">✅ 休息、冷敷<br>✅ Paracetamol（撲熱息痛）</td>
+                                <td class="avoid">❌ Aspirin（阿斯匹靈）<br>❌ Ibuprofen（布洛芬）</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="warning-box" style="margin-top: 15px;">
+                        <strong>📞 何時應該看醫生？</strong>
+                        <ul class="simple-list" style="margin-top: 8px;">
+                            <li>發燒超過 38°C 持續超過 24 小時</li>
+                            <li>症狀持續超過一週未好轉</li>
+                            <li>出現呼吸困難、胸痛</li>
+                            <li>任何出血或腹部劇痛</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 澳門就醫建議：</strong>
+                        <ul class="simple-list" style="margin-top: 8px;">
+                            <li><strong>一般不適</strong>：鏡湖醫院門診 (853) 2837 1333</li>
+                            <li><strong>緊急情況</strong>：鏡湖急診或致電 999</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== TRAVEL ==================== -->
+            <div id="travel" class="section">
+                <div class="card">
+                    <h3><i class="fas fa-plane"></i> 孕婦旅行指南</h3>
+                    <p style="color: var(--text-light); font-size: 0.85em; margin-bottom: 12px;">喜歡旅行，懷孕期間不是完全不能旅行，但要選對時間！</p>
+
+                    <div class="success-box">
+                        <strong>🟢 最佳旅行時間：孕中期</strong><br>
+                        第 14-28 週（2026年2-6月）<br>
+                        孕吐緩解、流產風險低、肚子還不太大
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>🟡 孕初期（第 1-12 週）需謹慎</strong><br>
+                        流產風險較高、孕吐嚴重<br>
+                        如需旅行，選近程、行程輕鬆的
+                    </div>
+
+                    <div class="danger-box">
+                        <strong>🔴 第 36 週後不建議旅行</strong><br>
+                        隨時可能生產、航空公司可能拒載
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== EMERGENCY ==================== -->
+            <div id="emergency" class="section">
+                <div class="card">
+                    <h3>⚠️ 需要立即就醫</h3>
+                    <div class="danger-box">遇到以下情況，<strong>立即去鏡湖醫院急診</strong>！</div>
+
+                    <div class="table-wrap">
+                        <table class="clean-table">
+                            <tr><th>症狀</th><th>可能原因</th><th>處理</th></tr>
+                            <tr><td class="food-name">🩸 陰道出血</td><td>先兆流產、胎盤問題</td><td>記錄出血量和顏色</td></tr>
+                            <tr><td class="food-name">😣 劇烈腹痛</td><td>宮外孕、胎盤早剝</td><td>立即就醫</td></tr>
+                            <tr><td class="food-name">💧 破水</td><td>羊水破裂</td><td>記錄時間，平躺等待</td></tr>
+                            <tr><td class="food-name">👶 胎動明顯減少</td><td>胎兒窘迫</td><td>數胎動，及時就醫</td></tr>
+                            <tr><td class="food-name">🤕 嚴重頭痛+視力模糊</td><td>妊娠高血壓</td><td>立即就醫</td></tr>
+                            <tr><td class="food-name">🌡️ 高燒超過38.5°C</td><td>感染</td><td>立即就醫</td></tr>
+                        </table>
+                    </div>
+
+                    <div class="info-box" style="margin-top: 12px;">
+                        <strong>📞 急診電話：</strong><br>
+                        鏡湖醫院：(853) 2837 1333<br>
+                        山頂醫院：(853) 2831 3731<br>
+                        緊急救護：999 / 120
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== TODO ==================== -->
+            <div id="todo" class="section">
+                <div class="overall-progress">
+                    <h3>📋 整體完成進度</h3>
+                    <div class="overall-progress-bar">
+                        <div class="overall-progress-fill" id="overallProgressFill" style="width: 0%;">0%</div>
+                    </div>
+                    <div id="overallProgressText" style="font-size: 0.85em;">0 / 17 項目完成</div>
+                </div>
+
+                <div class="card">
+                    <h3>孕初期（第1-12週）<span style="font-size: 0.8em; color: var(--text-light); margin-left: 8px;">2025年11月-2026年2月</span></h3>
+                    <div class="progress-container"><div class="progress-bar" id="progressBar1" style="width: 0%"></div></div>
+                    <div class="progress-text" id="progress1">0 / 6 完成</div>
+                    <ul class="checklist" id="checklist1">
+                        <li><input type="checkbox" onchange="updateAllProgress()" checked><div class="item-content"><div class="item-title">去鏡湖確認懷孕</div><div class="item-desc">6-8週可見心跳 ✅</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()" checked><div class="item-content"><div class="item-title">購買葉酸（800微克/日）、孕婦維他命</div><div class="item-desc">✅ 已購買 Elevit 愛樂維</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">聯繫菲傭中介</div><div class="item-desc">流程需 2-3 個月</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">用繪本跟仁仁講故事</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">協助恩慈處理孕吐</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">陪恩慈做 NT頸皮厚度檢查</div><div class="item-desc">第 11-14 週</div></div></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>孕中期（第13-27週）<span style="font-size: 0.8em; color: var(--text-light); margin-left: 8px;">2026年2-6月</span></h3>
+                    <div class="progress-container"><div class="progress-bar" id="progressBar2" style="width: 0%"></div></div>
+                    <div class="progress-text" id="progress2">0 / 6 完成</div>
+                    <ul class="checklist" id="checklist2">
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">提交菲傭申請文件</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">陪恩慈做唐氏症篩檢</div><div class="item-desc">第 16-20 週</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">陪恩慈做結構超聲波</div><div class="item-desc">第 20-24 週</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">預訂坐月子營養餐</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">菲傭到位、開始培訓</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">開始物色嬰兒用品</div></div></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>孕後期（第28-40週）<span style="font-size: 0.8em; color: var(--text-light); margin-left: 8px;">2026年6-9月</span></h3>
+                    <div class="progress-container"><div class="progress-bar" id="progressBar3" style="width: 0%"></div></div>
+                    <div class="progress-text" id="progress3">0 / 5 完成</div>
+                    <ul class="checklist" id="checklist3">
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">完成嬰兒用品採購</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">準備待產包</div><div class="item-desc">第 32-34 週完成</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">確認鏡湖生產流程</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">安排生產時仁仁照顧事項</div></div></li>
+                        <li><input type="checkbox" onchange="updateAllProgress()"><div class="item-content"><div class="item-title">確認營養餐開始日期</div></div></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== SUPPLIES ==================== -->
+            <div id="supplies" class="section">
+                <div class="card">
+                    <h3>🛒 嬰兒用品採購清單<span style="font-size: 0.8em; color: var(--text-light); margin-left: 8px;">第28-32週 / 2026年6-7月 完成</span></h3>
+                    <div class="progress-container"><div class="progress-bar" id="suppliesProgressBar" style="width: 0%"></div></div>
+                    <div class="progress-text" id="suppliesProgress">0 / 10 完成</div>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">🍼 餵養類</h4>
+                    <ul class="checklist" id="suppliesChecklist">
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">奶瓶 × 6-8 個</div></div></li>
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">奶粉 × 2-3 罐</div></div></li>
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()" checked><div class="item-content"><div class="item-title">消毒鍋</div><div class="item-desc">✅ 用現有的</div></div></li>
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">溫奶器</div></div></li>
+                    </ul>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">😴 睡眠類</h4>
+                    <ul class="checklist" id="suppliesChecklist2">
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">床墊、包巾</div></div></li>
+                    </ul>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">👕 衣物類</h4>
+                    <ul class="checklist" id="suppliesChecklist3">
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">紗布衣/蝴蝶衣 × 5-7 件</div></div></li>
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">包屁衣、襪子、手套、帽子</div></div></li>
+                    </ul>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">🚗 出行 + 護理</h4>
+                    <ul class="checklist" id="suppliesChecklist4">
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">尿布台</div><div class="item-desc">新購買</div></div></li>
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">尿布、濕紙巾</div></div></li>
+                        <li><input type="checkbox" onchange="updateSuppliesProgress()"><div class="item-content"><div class="item-title">檢查是否正常使用 - 嬰兒床、推車、背帶、澡盤（仁仁的）</div></div></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== HOSPITAL BAG ==================== -->
+            <div id="hospital" class="section">
+                <div class="card">
+                    <h3>🏥 鏡湖待產包<span style="font-size: 0.8em; color: var(--text-light); margin-left: 8px;">第32-34週 / 2026年7月 準備</span></h3>
+                    <div class="progress-container"><div class="progress-bar" id="hospitalProgressBar" style="width: 0%"></div></div>
+                    <div class="progress-text" id="hospitalProgress">0 / 9 完成</div>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">📄 證件（最重要！）</h4>
+                    <ul class="checklist" id="hospitalChecklist">
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">媽媽 + 爸爸身份證</div></div></li>
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">媽媽手冊（產檢記錄）</div></div></li>
+                    </ul>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">👩 媽媽用品</h4>
+                    <ul class="checklist" id="hospitalChecklist2">
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">產褥墊 × 2 包</div></div></li>
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">免洗內褲、產後衛生棉</div></div></li>
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">哺乳內衣 × 2-3 件</div></div></li>
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">出院衣服、拖鞋、盥洗用品</div></div></li>
+                    </ul>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">👶 寶寶用品</h4>
+                    <ul class="checklist" id="hospitalChecklist3">
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">出院衣服 1 套</div></div></li>
+                        <li><input type="checkbox" onchange="updateHospitalProgress()"><div class="item-content"><div class="item-title">包巾、帽子、襪子</div></div></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== HELPER ==================== -->
+            <div id="helper" class="section">
+                <div class="card">
+                    <h3>👩‍🍼 菲傭工作安排（暫定）</h3>
+                    <div class="info-box">
+                        <strong>安排：</strong>Stay-out（住外）| 07:00 - 19:00
+                    </div>
+
+                    <h4 style="margin: 15px 0 8px; font-size: 0.9em;">產後分工時間表</h4>
+                    <div class="schedule-timeline">
+                        <div class="schedule-grid">
+                            <div class="schedule-header">時段</div>
+                            <div class="schedule-header">01-06<br>夜間</div>
+                            <div class="schedule-header">07-08<br>早晨</div>
+                            <div class="schedule-header">08-16<br>日間</div>
+                            <div class="schedule-header">16-19<br>傍晚</div>
+                            <div class="schedule-header">19-01<br>晚間</div>
+
+                            <div class="schedule-role-header">👨 爸爸</div>
+                            <div class="schedule-cell highlight">夜間餵奶</div>
+                            <div class="schedule-cell">補眠</div>
+                            <div class="schedule-cell work">睡覺→上班</div>
+                            <div class="schedule-cell work">上班</div>
+                            <div class="schedule-cell">回家</div>
+
+                            <div class="schedule-role-header">👩 恩慈</div>
+                            <div class="schedule-cell">睡覺</div>
+                            <div class="schedule-cell">餵仁仁</div>
+                            <div class="schedule-cell">休息/餵寶寶</div>
+                            <div class="schedule-cell">陪仁仁</div>
+                            <div class="schedule-cell">睡覺</div>
+
+                            <div class="schedule-role-header">👧 菲傭</div>
+                            <div class="schedule-cell">-</div>
+                            <div class="schedule-cell work">上班</div>
+                            <div class="schedule-cell work">照顧寶寶</div>
+                            <div class="schedule-cell work">晚餐→下班</div>
+                            <div class="schedule-cell">-</div>
+
+                            <div class="schedule-role-header">👵 婆婆</div>
+                            <div class="schedule-cell">-</div>
+                            <div class="schedule-cell">協助</div>
+                            <div class="schedule-cell">送仁仁上學</div>
+                            <div class="schedule-cell highlight">接仁仁</div>
+                            <div class="schedule-cell">-</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 0.75em; color: var(--text-light); margin-top: 6px;">← 可左右滑動</p>
+                </div>
+            </div>
+
+            <!-- ==================== BROTHER ==================== -->
+            <div id="brother" class="section">
+                <div class="card">
+                    <h3>👦 仁仁心理準備</h3>
+                    <div class="success-box">
+                        <strong>✅ 這樣說</strong>
+                        <ul class="simple-list success" style="margin-top: 6px;">
+                            <li>「你是哥哥了，媽媽需要你幫忙」</li>
+                            <li>「弟弟/妹妹會很崇拜你」</li>
+                            <li>「這是你專屬的時間」</li>
+                        </ul>
+                    </div>
+                    <div class="danger-box">
+                        <strong>❌ 不要說</strong>
+                        <ul class="simple-list danger" style="margin-top: 6px;">
+                            <li>「有了弟弟就不要你了」</li>
+                            <li>「你是哥哥要讓弟弟」</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📚 繪本推薦</h3>
+                    <ul class="simple-list">
+                        <li>《小寶寶要來了》</li>
+                        <li>《我當哥哥了》</li>
+                        <li>《彼得的椅子》</li>
+                        <li>《媽媽的肚子變大了》</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ==================== COST ==================== -->
+            <div id="cost" class="section">
+                <div class="card">
+                    <h3>💰 坐月子費用比較</h3>
+                    <div class="cost-compare">
+                        <table class="cost-table">
+                            <tr>
+                                <th></th>
+                                <th>🏠 澳門在家</th>
+                                <th>🏨 珠海月子中心</th>
+                                <th>👩‍⚕️ 珠海月嫂</th>
+                            </tr>
+                            <tr>
+                                <td><strong>費用</strong></td>
+                                <td class="price">MOP 8-15K</td>
+                                <td class="price">MOP 35-95K</td>
+                                <td class="price">MOP 18-28K</td>
+                            </tr>
+                            <tr>
+                                <td class="pros">優點</td>
+                                <td class="pros">✅ 熟悉環境<br>✅ 婆婆可幫忙<br>✅ 費用較低</td>
+                                <td class="pros">✅ 專業照顧<br>✅ 可徹底休息<br>✅ 護理師夜間餵奶</td>
+                                <td class="pros">✅ 24小時幫手<br>✅ 費用較低</td>
+                            </tr>
+                            <tr>
+                                <td class="cons">缺點</td>
+                                <td class="cons">❌ 夜間需家人照顧</td>
+                                <td class="cons">❌ 遠離家人<br>❌ 仁仁要安排<br>❌ 費用較高</td>
+                                <td class="cons">❌ 質素參差<br>❌ 可能與菲傭重疊</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== BUDGET ==================== -->
+            <div id="budget" class="section">
+                <div class="card">
+                    <h3>🧮 預算計算器</h3>
+
+                    <h4 style="margin: 12px 0 8px; font-size: 0.9em;">一次性支出</h4>
+                    <div class="budget-section">
+                        <label class="cost-option"><input type="checkbox" onchange="calculateBudget()" data-cost="4000" checked><div class="cost-label">產檢費用（鏡湖）</div><div class="cost-value">MOP 3-5K</div></label>
+                        <label class="cost-option"><input type="checkbox" onchange="calculateBudget()" data-cost="8000" checked><div class="cost-label">嬰兒用品（部分可用仁仁舊的）</div><div class="cost-value">MOP 5-10K</div></label>
+                        <label class="cost-option"><input type="checkbox" onchange="calculateBudget()" data-cost="15000" checked><div class="cost-label">菲傭中介費+首月</div><div class="cost-value">MOP 12-18K</div></label>
+                    </div>
+
+                    <h4 style="margin: 12px 0 8px; font-size: 0.9em;">生產費用（擇一）</h4>
+                    <div class="budget-section">
+                        <label class="cost-option"><input type="radio" name="delivery" onchange="calculateBudget()" data-cost="15000" checked><div class="cost-label">自然產</div><div class="cost-value">MOP 12-18K</div></label>
+                        <label class="cost-option"><input type="radio" name="delivery" onchange="calculateBudget()" data-cost="25000"><div class="cost-label">剖腹產</div><div class="cost-value">MOP 20-30K</div></label>
+                    </div>
+
+                    <h4 style="margin: 12px 0 8px; font-size: 0.9em;">坐月子住院費用（擇一）</h4>
+                    <div class="budget-section">
+                        <label class="cost-option"><input type="radio" name="room" onchange="calculateBudget()" data-cost="10000" checked><div class="cost-label">普通房</div><div class="cost-value">MOP 8-12K</div></label>
+                        <label class="cost-option"><input type="radio" name="room" onchange="calculateBudget()" data-cost="50000"><div class="cost-label">一等房（家屬可陪同）</div><div class="cost-value">MOP 40-60K</div></label>
+                    </div>
+
+                    <h4 style="margin: 12px 0 8px; font-size: 0.9em;">坐月子選項（擇一）</h4>
+                    <div class="budget-section">
+                        <label class="cost-option"><input type="radio" name="confinement" onchange="calculateBudget()" data-cost="12000" checked><div class="cost-label">澳門在家+營養餐</div><div class="cost-value">MOP 8-15K</div></label>
+                        <label class="cost-option"><input type="radio" name="confinement" onchange="calculateBudget()" data-cost="65000"><div class="cost-label">珠海月子中心</div><div class="cost-value">MOP 35-95K</div></label>
+                        <label class="cost-option"><input type="radio" name="confinement" onchange="calculateBudget()" data-cost="23000"><div class="cost-label">珠海月嫂</div><div class="cost-value">MOP 18-28K</div></label>
+                    </div>
+
+                    <h4 style="margin: 12px 0 8px; font-size: 0.9em;">每月持續支出</h4>
+                    <div class="budget-section">
+                        <label class="cost-option"><input type="checkbox" onchange="calculateBudget()" data-cost-monthly="5000" checked><div class="cost-label">菲傭人工</div><div class="cost-value">MOP 4.5-5.5K/月</div></label>
+                        <label class="cost-option"><input type="checkbox" onchange="calculateBudget()" data-cost-monthly="2000" checked><div class="cost-label">奶粉</div><div class="cost-value">MOP 1.5-3K/月</div></label>
+                        <label class="cost-option"><input type="checkbox" onchange="calculateBudget()" data-cost-monthly="800" checked><div class="cost-label">尿片+日用品</div><div class="cost-value">MOP 0.6-1K/月</div></label>
+                    </div>
+
+                    <div class="budget-total"><span>一次性支出</span><span id="totalOnce">MOP 64,000</span></div>
+                    <div class="budget-total" style="background: var(--accent); margin-top: 8px;"><span>每月支出</span><span id="totalMonthly">MOP 7,800</span></div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>🙏 希望生產順利，大家平安，天主保佑。</p>
+                <p>預產期：2026年9月初 | 鏡湖醫院</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">✅ 已保存</div>
+
+    <script>
+        // ========== 密碼設置（請修改為你想要的密碼）==========
+        const PASSWORD = "enci2026";
+        // =====================================================
+
+        let memoryStorage = {};
+
+        function safeLocalStorage(action, key, value) {
+            try {
+                if (action === 'get') return localStorage.getItem(key);
+                else if (action === 'set') { localStorage.setItem(key, value); return true; }
+            } catch (e) {
+                if (action === 'get') return memoryStorage[key] || null;
+                else if (action === 'set') { memoryStorage[key] = value; return true; }
+            }
+        }
+
+        // ========== 密碼驗證 ==========
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            if (input === PASSWORD) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-content').classList.add('show');
+                safeLocalStorage('set', 'pregnancyGuideAuth', 'true');
+                initApp();
+            } else {
+                document.getElementById('login-error').classList.add('show');
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-input').focus();
+            }
+            return false;
+        }
+
+        function logout() {
+            safeLocalStorage('set', 'pregnancyGuideAuth', 'false');
+            document.getElementById('main-content').classList.remove('show');
+            document.getElementById('login-screen').classList.remove('hidden');
+            document.getElementById('login-error').classList.remove('show');
+            document.getElementById('password-input').value = '';
+        }
+
+        function checkAuth() {
+            const auth = safeLocalStorage('get', 'pregnancyGuideAuth');
+            if (auth === 'true') {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('main-content').classList.add('show');
+                initApp();
+            }
+        }
+
+        // ========== 主應用邏輯 ==========
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg || '✅ 已保存';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2000);
+        }
+
+        function showCategory(categoryId) {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.sub-tabs').forEach(st => st.style.display = 'none');
+            const subTabs = document.getElementById('sub-tabs-' + categoryId);
+            if (subTabs) {
+                subTabs.style.display = 'grid';
+                const firstSubTab = subTabs.querySelector('.sub-tab');
+                if (firstSubTab) firstSubTab.click();
+            }
+        }
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function updateAllProgress() {
+            ['checklist1', 'checklist2', 'checklist3'].forEach((id, i) => {
+                const checklist = document.getElementById(id);
+                if (checklist) {
+                    const checked = checklist.querySelectorAll('input[type="checkbox"]:checked').length;
+                    const total = checklist.querySelectorAll('input[type="checkbox"]').length;
+                    const percent = Math.round((checked / total) * 100);
+                    document.getElementById(`progress${i+1}`).textContent = `${checked} / ${total} 完成`;
+                    document.getElementById(`progressBar${i+1}`).style.width = `${percent}%`;
+                }
+            });
+
+            let totalChecked = 0, totalItems = 0;
+            ['checklist1', 'checklist2', 'checklist3'].forEach(id => {
+                const cl = document.getElementById(id);
+                if (cl) {
+                    totalChecked += cl.querySelectorAll('input[type="checkbox"]:checked').length;
+                    totalItems += cl.querySelectorAll('input[type="checkbox"]').length;
+                }
+            });
+            const overallPercent = totalItems > 0 ? Math.round((totalChecked / totalItems) * 100) : 0;
+            document.getElementById('overallProgressFill').style.width = `${overallPercent}%`;
+            document.getElementById('overallProgressFill').textContent = `${overallPercent}%`;
+            document.getElementById('overallProgressText').textContent = `${totalChecked} / ${totalItems} 項目完成`;
+            saveCheckboxState();
+        }
+
+        function updateSuppliesProgress() {
+            let checked = 0, total = 0;
+            ['suppliesChecklist', 'suppliesChecklist2', 'suppliesChecklist3', 'suppliesChecklist4'].forEach(id => {
+                const cl = document.getElementById(id);
+                if (cl) {
+                    checked += cl.querySelectorAll('input[type="checkbox"]:checked').length;
+                    total += cl.querySelectorAll('input[type="checkbox"]').length;
+                }
+            });
+            const percent = total > 0 ? Math.round((checked / total) * 100) : 0;
+            document.getElementById('suppliesProgress').textContent = `${checked} / ${total} 完成`;
+            document.getElementById('suppliesProgressBar').style.width = `${percent}%`;
+            saveCheckboxState();
+        }
+
+        function updateHospitalProgress() {
+            let checked = 0, total = 0;
+            ['hospitalChecklist', 'hospitalChecklist2', 'hospitalChecklist3'].forEach(id => {
+                const cl = document.getElementById(id);
+                if (cl) {
+                    checked += cl.querySelectorAll('input[type="checkbox"]:checked').length;
+                    total += cl.querySelectorAll('input[type="checkbox"]').length;
+                }
+            });
+            const percent = total > 0 ? Math.round((checked / total) * 100) : 0;
+            document.getElementById('hospitalProgress').textContent = `${checked} / ${total} 完成`;
+            document.getElementById('hospitalProgressBar').style.width = `${percent}%`;
+            saveCheckboxState();
+        }
+
+        function saveCheckboxState() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            const state = {};
+            allCheckboxes.forEach((cb, index) => { state[index] = cb.checked; });
+            safeLocalStorage('set', 'pregnancyGuideV9Protected', JSON.stringify(state));
+            showToast('✅ 已保存');
+        }
+
+        function loadCheckboxState() {
+            const saved = safeLocalStorage('get', 'pregnancyGuideV9Protected');
+            if (saved) {
+                try {
+                    const state = JSON.parse(saved);
+                    const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+                    allCheckboxes.forEach((cb, index) => {
+                        if (state[index] !== undefined) cb.checked = state[index];
+                    });
+                } catch (e) {}
+            }
+        }
+
+        function calculateBudget() {
+            let totalOnce = 0, totalMonthly = 0;
+            document.querySelectorAll('#budget input[type="checkbox"][data-cost]').forEach(cb => {
+                if (cb.checked) totalOnce += parseInt(cb.dataset.cost) || 0;
+            });
+            document.querySelectorAll('#budget input[type="radio"][name="delivery"]').forEach(radio => {
+                if (radio.checked) totalOnce += parseInt(radio.dataset.cost) || 0;
+            });
+            document.querySelectorAll('#budget input[type="radio"][name="room"]').forEach(radio => {
+                if (radio.checked) totalOnce += parseInt(radio.dataset.cost) || 0;
+            });
+            document.querySelectorAll('#budget input[type="radio"][name="confinement"]').forEach(radio => {
+                if (radio.checked) totalOnce += parseInt(radio.dataset.cost) || 0;
+            });
+            document.querySelectorAll('#budget input[type="checkbox"][data-cost-monthly]').forEach(cb => {
+                if (cb.checked) totalMonthly += parseInt(cb.dataset.costMonthly) || 0;
+            });
+            document.getElementById('totalOnce').textContent = `MOP ${totalOnce.toLocaleString()}`;
+            document.getElementById('totalMonthly').textContent = `MOP ${totalMonthly.toLocaleString()}`;
+        }
+
+        function initApp() {
+            loadCheckboxState();
+            calculateBudget();
+            updateAllProgress();
+            updateSuppliesProgress();
+            updateHospitalProgress();
+        }
+
+        // 頁面載入時檢查是否已登入
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
